@@ -1,1 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prizmabrixx Premium Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            --blur: blur(16px);
+            --text-main: #ffffff;
+            --text-dark: #1a1a2e;
+            --font-inter: 'Inter', sans-serif;
+            --font-space: 'Space Grotesk', sans-serif;
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: var(--font-inter);
+            color: var(--text-main);
+            background: #000;
+        }
+
+        /* ===== SCROLL CONTAINER ===== */
+        .scroll-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ===== SECTION BASE ===== */
+        .section {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* UTILS */
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+        }
+        .hidden { display: none !important; }
+
+        /* =========================================
+           SECTION 1: VR POD (PRIZMABRIXX)
+           ========================================= */
+        .sec-1 {
+            background: radial-gradient(circle at 30% 70%, #ffccd5 0%, #d4c2fc 40%, #b8c0ff 80%, #a4b0f5 100%);
+            display: grid;
+            grid-template-columns: 320px 1fr 340px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .s1-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .s1-card {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .s1-card h3 {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.9);
+            position: absolute;
+            top: 25px;
+            left: 25px;
+        }
+
+        /* Circular Data Display */
+        .dial-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dial-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1), 0 5px 20px rgba(0,0,0,0.05);
+            z-index: 1;
+        }
+
+        .dial-number {
+            position: relative;
+            z-index: 10;
+            font-family: var(--font-space);
+            font-size: 38px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        /* Animations for Dials */
+        .dial-svg {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            z-index: 5;
+            animation: spin 8s linear infinite;
+        }
+
+        .dial-svg-rev {
+            animation: spin-rev 12s linear infinite;
+        }
+
+        .s1-card .nav-dots {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            bottom: 25px;
+        }
+
+        .s1-card .nav-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .s1-card .nav-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        /* Center VR */
+        .s1-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .s1-top-brand {
+            position: absolute;
+            top: 40px;
+            font-family: var(--font-space);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(255,255,255,0.5);
+            z-index: 10;
+        }
+
+        .s1-pod-img {
+            width: 80%;
+            max-width: 600px;
+            aspect-ratio: 1;
+            object-fit: contain;
+            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.3));
+            animation: float 6s ease-in-out infinite;
+            z-index: 5;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+
+        .s1-bottom-title {
+            position: absolute;
+            bottom: 60px;
+            text-align: center;
+            z-index: 10;
+        }
+        .s1-bottom-title h1 {
+            font-family: var(--font-space);
+            font-size: clamp(32px, 4vw, 56px);
+            font-weight: 800;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, rgba(255,255,255,0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .s1-bottom-title p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            max-width: 400px;
+            margin: 10px auto 0;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        /* Right Panel */
+        .s1-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .s1-top-bar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+        }
+
+        .s1-search {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            width: 60%;
+        }
+        .s1-search::placeholder { color: rgba(255,255,255,0.6); }
+
+        .s1-user {
+            width: 32px;
+            height: 32px;
+            background: #2a2a4a;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .s1-list {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .s1-list-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+        }
+        .s1-list-tabs span.active {
+            color: #fff;
+        }
+
+        .s1-list-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .s1-list-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+
+        .s1-item-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7c3aed, #ec4899);
+        }
+
+        .s1-item-text h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .s1-item-text p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .s1-player {
+            height: 120px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .s1-player h4 {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .s1-controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .s1-controls span {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 10px;
+        }
+        .s1-controls span:hover {
+            background: #fff;
+            color: #000;
+        }
+
+
+        /* =========================================
+           SECTION 2: AI PLATFORM (B&W THEME)
+           ========================================= */
+        .sec-2 {
+            background: #e5e5e5;
+            color: var(--text-dark);
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 40px;
+        }
+
+        .s2-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .s2-nav-logo {
+            font-family: var(--font-space);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .s2-hero-text {
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .s2-hero-text h1 {
+            font-family: var(--font-space);
+            font-size: clamp(10px, 2vw, 25px);
+            font-weight: 800;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #1a1a1a;
+            max-width: 900px;
+        }
+
+        .s2-hero-text h1 span {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 0 16px;
+            border-radius: 40px;
+        }
+
+        .s2-prizma {
+            font-family: var(--font-space);
+            font-size: 24px;
+            font-weight: 700;
+            color: #666;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .s2-interactive-center {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 350px;
+            margin-top: 60px;
+            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(200,200,200,0.5), rgba(240,240,240,0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* Abstract Nature BG simulation */
+        .s2-interactive-center::before {
+            content: '';
+            position: absolute;
+            inset: -50px;
+            background: radial-gradient(circle at 40% 50%, #d4e0b3 0%, rgba(212,224,179,0) 40%),
+                        radial-gradient(circle at 70% 60%, #c1aef2 0%, rgba(193,174,242,0) 30%);
+            filter: blur(30px);
+            z-index: 1;
+            animation: pulse-bg 8s infinite alternate;
+        }
+
+        .s2-play-btn {
+            position: relative;
+            z-index: 10;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .s2-play-btn:hover {
+            transform: scale(1.15);
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 40px rgba(255,255,255,0.8);
+        }
+
+        .s2-play-btn .triangle {
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 24px solid #fff;
+            margin-left: 6px;
+            transition: border-left-color 0.4s ease;
+        }
+        .s2-play-btn:hover .triangle {
+            border-left-color: #000;
+        }
+
+        /* Play Animation Effect */
+        .s2-play-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.6);
+            animation: ripple 2s linear infinite;
+        }
+
+        /* =========================================
+           SECTION 3: GLASS DASHBOARD
+           ========================================= */
+        .sec-3 {
+            background: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+        }
+        /* Heavy blur overlay to match design */
+        .sec-3::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(40px);
+            z-index: 1;
+        }
+
+        .s3-dashboard {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 1300px;
+            height: 85vh;
+            display: grid;
+            grid-template-columns: 3fr 4fr 3fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px; /* space for bottom toolbar */
+        }
+
+        .s3-toolbar {
+            position: absolute;
+            left: 20px;
+            bottom: 40px;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+        .s3-toolbar-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .s3-toolbar-icon:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .s3-panel {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            color: var(--text-dark);
+            transition: transform 0.4s var(--transition-smooth);
+            overflow: hidden;
+            position: relative;
+        }
+        .s3-panel.dark {
+            background: rgba(20, 20, 25, 0.7);
+            color: #fff;
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .s3-panel:hover {
+            transform: translateY(-5px);
+        }
+
+        .s3-panel-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .s3-panel-subtitle {
+            font-size: 11px;
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        .dark .s3-panel-subtitle { color: rgba(255,255,255,0.5); }
+
+        /* Widget 1: Chaos Geometry (Top Left Dark) */
+        .widget-chaos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chaos-shape {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #fff, #555);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            animation: morph 8s ease-in-out infinite alternate;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 20px 30px rgba(0,0,0,0.5);
+            margin-top: 20px;
+        }
+
+        /* Widget 2: Bar Chart (Top Middle) */
+        .widget-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100px;
+            margin-top: 30px;
+        }
+        .bar {
+            width: 14px;
+            background: #fff;
+            border-radius: 10px;
+            height: 0;
+            transition: height 1s var(--transition-smooth);
+        }
+        .dark .bar { background: #fff; }
+        .light.s3-panel .bar { background: #1a1a2e; }
+
+        /* Widget 3: Line Chart (Bottom Left Dark) */
+        .line-chart-svg {
+            width: 100%;
+            height: 120px;
+            margin-top: 10px;
+        }
+        .line-path {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 3;
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            transition: stroke-dashoffset 2s ease-in-out;
+        }
+
+        /* Widget 4: Timeline / Process (Bottom Middle) */
+        .timeline-box {
+            position: relative;
+            height: 140px;
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            margin-left: 20px;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .time-dot {
+            position: absolute;
+            left: -6px;
+            width: 10px;
+            height: 10px;
+            background: #1a1a2e;
+            border-radius: 50%;
+        }
+        .time-event {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: inline-block;
+            width: max-content;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        /* Bottom Menu */
+        .s3-bottom-menu {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 8px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 10px;
+        }
+        .s3-menu-item {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            padding: 8px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .s3-menu-item.active, .s3-menu-item:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* =========================================
+           SECTION 4: FETURA GLASS CARDS
+           ========================================= */
+        .sec-4 {
+            background: #f4ecdf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Abstract 3D BG Elements */
+        .s4-bg-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff, transparent);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.5), 0 20px 40px rgba(0,0,0,0.1);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            z-index: 1;
+            animation: float-slow 10s ease-in-out infinite alternate;
+        }
+        .s4-sphere-1 { width: 150px; height: 150px; top: 15%; left: 15%; background: radial-gradient(circle, #fff, #dcdcdc); }
+        .s4-sphere-2 { width: 80px; height: 80px; bottom: 20%; left: 30%; background: radial-gradient(circle, #fff, #e6e6fa); }
+        .s4-sphere-3 { width: 120px; height: 120px; top: 25%; right: 15%; background: radial-gradient(circle, #fff, #b0c4de); }
+
+        .s4-squiggle {
+            position: absolute;
+            width: 80px;
+            height: 30px;
+            border-radius: 20px;
+            background: #8b5cf6;
+            top: 20%;
+            left: 60%;
+            transform: rotate(-20deg);
+            box-shadow: inset 0 5px 10px rgba(255,255,255,0.5), 0 10px 20px rgba(139,92,246,0.3);
+            z-index: 1;
+        }
+
+        /* Cards Layout */
+        .s4-cards-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 1000px;
+            height: 600px;
+        }
+
+        /* Main Base Plate */
+        .s4-base-plate {
+            position: absolute;
+            inset: 40px;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(30px);
+            border-radius: 60px;
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.05), inset 0 0 40px rgba(255,255,255,0.5);
+        }
+
+        /* Glass Cards */
+        .s4-card {
+            position: absolute;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            color: #333;
+            transition: transform 0.5s var(--transition-smooth);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .s4-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .s4-card-1 {
+            width: 400px;
+            height: 250px;
+            left: 0;
+            top: 150px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(200,200,250,0.2) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .s4-card-1 h2 {
+            font-family: var(--font-space);
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #1a1a2e;
+        }
+        .s4-btn {
+            padding: 8px 24px;
+            border-radius: 30px;
+            border: 1px solid #1a1a2e;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+            width: max-content;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .s4-btn:hover {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .s4-card-2 {
+            width: 350px;
+            height: 160px;
+            right: 80px;
+            top: 60px;
+            background: linear-gradient(135deg, rgba(139,92,246,0.8), rgba(99,102,241,0.6));
+            color: #fff;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .s4-card-2 h3 {
+            font-family: var(--font-space);
+            font-size: 20px;
+        }
+
+        .s4-card-3 {
+            width: 350px;
+            height: 180px;
+            right: 80px;
+            bottom: 120px;
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .s4-card-3 h3 {
+            font-family: var(--font-space);
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .s4-card-3 p {
+            font-size: 10px;
+            color: #666;
+            max-width: 150px;
+            line-height: 1.4;
+        }
+        .s4-card-3 .s4-btn {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .s4-floating-orb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #a78bfa, #5b21b6);
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            box-shadow: 0 10px 20px rgba(91,33,182,0.4);
+            animation: bounce 3s infinite alternate;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-rev { 100% { transform: rotate(-360deg); } }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes float-slow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.05); }
+        }
+        @keyframes morph {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            100% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+        }
+        @keyframes pulse-bg {
+            0% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes ripple {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        /* IN-VIEW ANIMATIONS */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="scroll-container">
+
+    <!-- ======================= SECTION 1: VR POD ======================= -->
+    <section class="section sec-1">
+        <div class="s1-left">
+            <!-- Panel 1 -->
+            <div class="glass-panel s1-card">
+                <h3>Customizable Ambience</h3>
+                <div class="dial-container">
+                    <div class="dial-bg"></div>
+                    <svg class="dial-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="10 5" />
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="80 180" stroke-linecap="round" />
+                    </svg>
+                    <svg class="dial-svg dial-svg-rev" viewBox="0 0 100 100" style="width:140%; height:140%; top:-20%; left:-20%;">
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="40 60" />
+                    </svg>
+                    <div class="dial-number js-num" data-target="70">0</div><span style="color:#1a1a2e; font-weight:700; font-size:20px; z-index:10">%</span>
+                </div>
+                <div class="nav-dots" style="bottom: 35px;">
+                    <span class="nav-dot active"></span>
+                    <span class="nav-dot"></span>
+                    <span class="nav-dot"></span>
+                    <span class="nav-dot"></span>
+                </div>
+            </div>
+            <!-- Panel 2 -->
+            <div class="glass-panel s1-card">
+                <h3>Set Temperature</h3>
+                <div class="dial-container" style="width: 140px; height: 140px;">
+                    <div class="dial-bg" style="background:#fff;"></div>
+                    <div class="dial-number js-num" style="font-size:32px;" data-target="24">0</div><span style="color:#1a1a2e; font-weight:700; font-size:16px; z-index:10; margin-left:4px;">°C</span>
+                    <!-- little red dot marker -->
+                    <div style="position:absolute; right:15px; top:15px; width:8px; height:8px; background:red; border-radius:50%; z-index:10;"></div>
+                </div>
+                <div style="display:flex; gap:10px; position:absolute; bottom:25px; width:100%; justify-content:center; padding:0 20px;">
+                    <div style="flex:1; border:1px solid rgba(255,255,255,0.5); border-radius:10px; padding:10px; font-size:10px;">❄<br>Cold</div>
+                    <div style="flex:1; border:1px solid rgba(255,255,255,0.5); border-radius:10px; padding:10px; font-size:10px;">💨<br>Wind</div>
+                    <div style="flex:1; border:1px solid rgba(255,255,255,0.5); border-radius:10px; padding:10px; font-size:10px;">💤<br>Sleep</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="s1-center">
+            <div class="s1-top-brand">PRIZMABRIXX</div>
+            <img src="https://raw.githubusercontent.com/vatsalvarma/VR/refs/heads/main/vr_pod.png" alt="VR Pod" class="s1-pod-img" onerror="this.src=''; this.style.background='#fff'; this.style.borderRadius='40px';">
+            <div class="s1-bottom-title">
+                <h1>VIRTUAL REALITY</h1>
+                <p>Experience films like never before. The Prizmabrixx Reality POD redefines movie immersion with cutting-edge technology designed to transport you directly into the heart of your favorite stories.</p>
+            </div>
+        </div>
+
+        <div class="s1-right">
+            <div class="glass-panel s1-top-bar">
+                <input type="text" class="s1-search" placeholder="Search...">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 15l-4-4m0-7A7 7 0 111 8a7 7 0 0114 0z"></path></svg>
+                <div class="s1-user"></div>
+            </div>
+            <div class="glass-panel s1-list">
+                <div class="s1-list-tabs">
+                    <span class="active">📺 Shows</span>
+                    <span>🎬 Movies</span>
+                </div>
+                <div class="s1-list-item">
+                    <div class="s1-item-img" style="background: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1974&auto=format&fit=crop') center/cover;"></div>
+                    <div class="s1-item-text">
+                        <h4>The Wild Robot</h4>
+                        <p>9.0/10 • 75.3k Votes</p>
+                    </div>
+                </div>
+                <div class="s1-list-item">
+                    <div class="s1-item-img" style="background: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=1974&auto=format&fit=crop') center/cover;"></div>
+                    <div class="s1-item-text">
+                        <h4>Lost</h4>
+                        <p>7.0/10 • 200.6k Votes</p>
+                    </div>
+                </div>
+                <div class="s1-list-item" style="background: rgba(255,255,255,0.15)">
+                    <div class="s1-item-img" style="background: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop') center/cover;"></div>
+                    <div class="s1-item-text">
+                        <h4>Monkey</h4>
+                        <p>5.0/10 • 78.5k Votes</p>
+                    </div>
+                </div>
+                <div class="nav-dots" style="justify-content:center; gap:6px; margin-top:20px;">
+                    <span class="nav-dot active" style="width:16px; border-radius:4px;"></span>
+                    <span class="nav-dot"></span>
+                    <span class="nav-dot"></span>
+                </div>
+            </div>
+            <div class="glass-panel s1-player">
+                <p style="font-size:11px; color:#ddd;">Now Playing</p>
+                <h4>The Wild Robot</h4>
+                <div style="width:80%; height:2px; background:rgba(255,255,255,0.2); margin:5px 0;">
+                    <div style="width:40%; height:100%; background:#ec4899; position:relative;">
+                        <div style="position:absolute; right:-4px; top:-3px; width:8px; height:8px; border-radius:50%; background:#fff;"></div>
+                    </div>
+                </div>
+                <div class="s1-controls">
+                    <span>⏮</span>
+                    <span style="transform:scale(1.3); background:#fff; color:#000;">▶</span>
+                    <span>⏭</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ======================= SECTION 2: AI PLATFORM ======================= -->
+    <section class="section sec-2">
+        <div class="s2-nav">
+            <div class="s2-nav-logo">▲|</div>
+            <div style="display:flex; gap:30px; font-size:12px; font-weight:600;">
+                <span>Services ↗</span>
+                <span>Technologies ↗</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:50%; background:#ccc;"></div>
+                <span style="font-size:12px; font-weight:600;">Login / SignUp</span>
+            </div>
+        </div>
+
+        <div class="s2-hero-text animate-in">
+            <h1>THIS IS <br>THE <span>●</span> EXTRAORDINARY<br>AI PLATFORM <span>●</span><br>TO FIND ON EARTH!</h1>
+            <div class="s2-prizma">prizmabrixx</div>
+            <p style="max-width:300px; font-size:12px; color:#555; margin-top:20px;">Innovative solutions and designs that push the boundaries of the ordinary.</p>
+            <div style="display:flex; gap:15px; margin-top:30px;">
+                <button style="padding:12px 30px; border-radius:30px; border:1px solid #1a1a1a; background:transparent; font-weight:600;">Search</button>
+                <button style="padding:12px 30px; border-radius:30px; border:none; background:#1a1a1a; color:#fff; font-weight:600;">Generate Now ↗</button>
+            </div>
+        </div>
+
+        <div class="s2-interactive-center animate-in">
+            <!-- Center Play Button -->
+            <div class="s2-play-btn" onclick="playAnim(this)">
+                <div class="s2-play-ring"></div>
+                <div class="triangle"></div>
+            </div>
+
+            <!-- Glass cards overlay -->
+            <div style="position:absolute; left:40px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.6); backdrop-filter:blur(10px); padding:20px; border-radius:20px; display:flex; align-items:center; gap:15px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+                <div style="width:60px; height:40px; background:#000; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;">3k+</div>
+                <div>
+                    <h4 style="font-size:14px;">Find Your Inspiration</h4>
+                    <p style="font-size:10px; color:#555; max-width:140px;">Check out our sample collection to get inspired.</p>
+                </div>
+            </div>
+
+            <div style="position:absolute; right:40px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.6); backdrop-filter:blur(10px); padding:20px; border-radius:20px; display:flex; align-items:center; gap:15px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+                <div style="width:50px; height:50px; background:radial-gradient(circle, #ec4899, #7c3aed); border-radius:50%;"></div>
+                <div>
+                    <h4 style="font-size:14px;">Try using them</h4>
+                    <p style="font-size:10px; color:#555; max-width:140px;">Explore the newest advancements in AI technology.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="position:absolute; right:40px; bottom:40px; background:rgba(255,255,255,0.6); backdrop-filter:blur(10px); display:flex; flex-direction:column; padding:10px; border-radius:30px; gap:10px;">
+            <div style="width:30px; height:30px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:12px;">1</div>
+            <div style="width:30px; height:30px; border-radius:50%; border:1px solid #1a1a1a; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:12px;">2</div>
+            <div style="width:30px; height:30px; border-radius:50%; border:1px solid #1a1a1a; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:12px;">3</div>
+        </div>
+    </section>
+
+
+    <!-- ======================= SECTION 3: DASHBOARD ======================= -->
+    <section class="section sec-3">
+        <!-- Left Toolbar -->
+        <div class="s3-toolbar animate-in">
+            <div class="s3-toolbar-icon" style="background:#fff; color:#000;">⊞</div>
+            <div class="s3-toolbar-icon">👥</div>
+            <div class="s3-toolbar-icon">⚙</div>
+            <div class="s3-toolbar-icon">★</div>
+            <div class="s3-toolbar-icon">📊</div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="s3-dashboard">
+            <!-- Col 1 -->
+            <div style="display:flex; flex-direction:column; gap:20px;">
+                <div class="s3-panel dark animate-in" style="flex:1;">
+                    <h3 class="s3-panel-title">Геометрия хаоса</h3>
+                    <p class="s3-panel-subtitle">Chaos Geometry</p>
+                    <div class="widget-chaos">
+                        <div class="chaos-shape"></div>
+                    </div>
+                </div>
+                <div class="s3-panel dark animate-in" style="flex:1; transition-delay:0.1s;">
+                    <h3 class="s3-panel-title">Число заказов</h3>
+                    <p class="s3-panel-subtitle">Order Count Trends</p>
+                    <svg class="line-chart-svg" viewBox="0 0 100 50">
+                        <path class="line-path" d="M0,45 C20,40 30,10 50,20 C70,30 80,5 100,2" />
+                        <circle cx="100" cy="2" r="2" fill="#fff" />
+                    </svg>
+                    <div style="display:flex; justify-content:space-between; font-size:9px; color:rgba(255,255,255,0.5); margin-top:5px;">
+                        <span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Col 2 -->
+            <div style="display:flex; flex-direction:column; gap:20px;">
+                <div class="s3-panel light animate-in" style="flex:1; transition-delay:0.2s;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <div>
+                            <h3 class="s3-panel-title">Неделя в работе</h3>
+                            <p class="s3-panel-subtitle">Weekly Workflow</p>
+                        </div>
+                        <div style="font-family:var(--font-space); font-size:32px; font-weight:700;">16<span style="font-size:16px;">ч</span></div>
+                    </div>
+                    <div class="widget-bars">
+                        <div class="bar bar-fill" data-height="40%"></div>
+                        <div class="bar bar-fill" data-height="60%"></div>
+                        <div class="bar bar-fill" data-height="100%" style="background:#1a1a2e;"></div>
+                        <div class="bar bar-fill" data-height="70%"></div>
+                        <div class="bar bar-fill" data-height="50%"></div>
+                        <div class="bar bar-fill" data-height="30%"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-around; font-size:10px; font-weight:600; margin-top:8px;">
+                        <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span>
+                    </div>
+                </div>
+                <div class="s3-panel light animate-in" style="flex:1.5; transition-delay:0.3s; padding:15px;">
+                    <h3 class="s3-panel-title" style="text-align:center;">Май 2025</h3>
+                    <div style="display:flex; margin-top:15px;">
+                        <div style="font-size:11px; font-weight:600; line-height:30px; text-align:right; width:40px; border-right:1px solid rgba(0,0,0,0.1); padding-right:10px;">
+                            12:00<br>13:00<br>14:00
+                        </div>
+                        <div class="timeline-box">
+                            <div style="top:5px;">
+                                <div class="time-dot"></div>
+                                <div class="time-event ev-anim">📞 Callback Status 🎥</div>
+                            </div>
+                            <div style="top:50px;">
+                                <div class="time-dot"></div>
+                                <div class="time-event ev-anim" style="background:#fff; color:#000; border:1px solid #ddd;">📊 System Analyze</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Col 3 -->
+            <div style="display:flex; flex-direction:column; gap:20px;">
+                <div class="s3-panel light animate-in" style="flex:0.8; transition-delay:0.4s;">
+                    <h3 class="s3-panel-title">Уровень заряда</h3>
+                    <div style="display:flex; justify-content:space-around; margin-top:15px;">
+                        <div style="position:relative; width:60px; height:60px;">
+                            <svg viewBox="0 0 36 36"><path stroke-dasharray="90, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1a1a2e" stroke-width="3"/></svg>
+                            <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-weight:600; font-size:14px;">90%</span>
+                        </div>
+                        <div style="position:relative; width:60px; height:60px;">
+                            <svg viewBox="0 0 36 36"><path stroke-dasharray="65, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#666" stroke-width="3"/></svg>
+                            <span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-weight:600; font-size:14px;">65%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="s3-panel dark animate-in" style="flex:1.2; transition-delay:0.5s;">
+                    <h3 class="s3-panel-title">Настройки проектов</h3>
+                    <p class="s3-panel-subtitle">Project Settings</p>
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:20px;">
+                        <div style="flex:1; background:rgba(255,255,255,0.1); height:6px; border-radius:3px; position:relative;">
+                            <div style="position:absolute; left:0; top:0; height:100%; width:80%; background:#fff; border-radius:3px;"></div>
+                        </div>
+                        <span style="font-size:11px;">80%</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-top:15px;">
+                        <div style="flex:1; background:rgba(255,255,255,0.1); height:6px; border-radius:3px; position:relative;">
+                            <div style="position:absolute; left:0; top:0; height:100%; width:40%; background:#fff; border-radius:3px;"></div>
+                        </div>
+                        <span style="font-size:11px;">40%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Menu -->
+        <div class="s3-bottom-menu animate-in" style="transition-delay:0.6s;">
+            <div class="s3-menu-item active">Главная</div>
+            <div class="s3-menu-item">Работы</div>
+            <div class="s3-menu-item">Процесс</div>
+            <div class="s3-menu-item">Блог</div>
+            <div class="s3-menu-item" style="padding: 8px 12px;">+</div>
+        </div>
+    </section>
+
+
+    <!-- ======================= SECTION 4: GLASS CARDS ======================= -->
+    <section class="section sec-4">
+
+        <div class="s4-cards-wrapper animate-in">
+            <!-- BG abstract shapes -->
+            <div class="s4-bg-element s4-sphere-1"></div>
+            <div class="s4-bg-element s4-sphere-2"></div>
+            <div class="s4-bg-element s4-sphere-3"></div>
+            <div class="s4-squiggle"></div>
+
+            <!-- Base Plate -->
+            <div class="s4-base-plate"></div>
+
+            <!-- Card 1 -->
+            <div class="s4-card s4-card-1">
+                <h2>Fetura Premium<br>Cloud/AI Platform</h2>
+                <button class="s4-btn">Explore</button>
+                <!-- mini floating detail -->
+                <div style="position:absolute; bottom:20px; right:20px; font-size:10px; color:#555; text-transform:uppercase; letter-spacing:1px; writing-mode:vertical-rl;">prizmabrixx</div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="s4-card s4-card-2" style="transition-delay: 0.1s;">
+                <h3>Visio UA<br>Cloud/Platform</h3>
+                <div style="margin-top:20px; font-size:11px; opacity:0.8;">Next gen capabilities</div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="s4-card s4-card-3" style="transition-delay: 0.2s;">
+                <div>
+                    <h3>Ceand<br>Tulik Tornidus</h3>
+                    <p>Generate images and videos with artificial intelligence algorithms in real-time.</p>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:20px;">
+                    <span style="font-size:12px; font-weight:600; color:#1a1a2e; letter-spacing:1px;">Noune</span>
+                    <button class="s4-btn">Source</button>
+                </div>
+                <div class="s4-floating-orb"></div>
+            </div>
+
+        </div>
+
+        <div style="position:absolute; top:40px; width:100%; display:flex; justify-content:space-between; padding:0 60px; font-weight:600; color:#1a1a2e; font-size:14px; z-index:20;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>prizmabrixx</span>
+            </div>
+            <div style="display:flex; gap:30px; font-size:12px;">
+                <span>Home</span><span>Items</span><span>Fluid</span><span>Objects</span>
+                <button style="background:#1a1a2e; color:#fff; border:none; padding:4px 16px; border-radius:20px; font-size:11px; margin-left:20px;">Get API</button>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // Number Animation for VR Pod
+    const counters = document.querySelectorAll('.js-num');
+    const speed = 50;
+
+    counters.forEach(counter => {
+        const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const inc = target / speed;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        // Intersection Observer to trigger when in view
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                counter.innerText = '0';
+                updateCount();
+            }
+        });
+        observer.observe(counter);
+    });
+
+    // Scroll Animations (Viewport Reveal)
+    const observerOptions = {
+        root: document.querySelector('.scroll-container'),
+        threshold: 0.3
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+
+                // Trigger inner animations like bars
+                if (entry.target.classList.contains('s3-panel')) {
+                    const bars = entry.target.querySelectorAll('.bar-fill');
+                    bars.forEach((bar, i) => {
+                        setTimeout(() => {
+                            bar.style.height = bar.getAttribute('data-height');
+                        }, 300 + (i * 100));
+                    });
+
+                    const path = entry.target.querySelector('.line-path');
+                    if (path) {
+                        setTimeout(() => {
+                            path.style.strokeDashoffset = '0';
+                        }, 400);
+                    }
+
+                    const events = entry.target.querySelectorAll('.ev-anim');
+                    events.forEach((ev, i) => {
+                        setTimeout(() => {
+                            ev.style.opacity = '1';
+                            ev.style.transform = 'translateX(0)';
+                        }, 500 + (i * 200));
+                    });
+                }
+            } else {
+                // entry.target.classList.remove('visible');
+                // Reset bars
+                const bars = entry.target.querySelectorAll('.bar-fill');
+                bars.forEach(bar => bar.style.height = '0');
+
+                const path = entry.target.querySelector('.line-path');
+                if (path) path.style.strokeDashoffset = '500';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-in').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // Play Button Animation Splay
+    function playAnim(btn) {
+        btn.style.transform = "scale(0.9)";
+        setTimeout(() => {
+            btn.style.transform = "scale(1.2)";
+        }, 150);
+        setTimeout(() => {
+            btn.style.transform = "";
+        }, 300);
+    }
+
+    // Parallax Effect for Glass Cards
+    const cardSection = document.querySelector('.sec-4');
+    const cards = document.querySelectorAll('.s4-card');
+    const orbs = document.querySelectorAll('.s4-bg-element');
+
+    cardSection.addEventListener('mousemove', (e) => {
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+
+        cards.forEach((card, index) => {
+            const multiplier = index === 0 ? 1 : index === 1 ? -1.5 : 2;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateZ(${50 * multiplier}px)`;
+        });
+
+        orbs.forEach((orb, index) => {
+            orb.style.transform = `translate(${xAxis * (index+1) * 3}px, ${yAxis * (index+1) * 3}px)`;
+        });
+    });
+
+    cardSection.addEventListener('mouseleave', () => {
+        cards.forEach(card => {
+            card.style.transform = `rotateY(0deg) rotateX(0deg) translateZ(0) translateY(0)`;
+        });
+        orbs.forEach(orb => orb.style.transform = `translate(0px, 0px)`);
+    });
+
+</script>
+</body>
+</html>
 
